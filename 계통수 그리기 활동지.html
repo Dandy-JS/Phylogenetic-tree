@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>계통수 그리기 활동지</title>
+<style>
+:root{--bg:#f6f7f4;--card:#fff;--tx:#1d2a24;--mu:#5d6b64;--ln:#2e4a3d;--ac:#1f7a5a;--bd:#d6ddd8;--g:#d9f2e4;--gt:#14663f;--l:#fde3df;--lt:#a3271b;--ok:#14663f;--no:#b3271b;--sl:#eef3ef;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#141a17;--card:#1d2621;--tx:#e8efe9;--mu:#9fb0a6;--ln:#9cc7b2;--ac:#4cc39a;--bd:#34443b;--g:#1d4a35;--gt:#9ae6c0;--l:#512623;--lt:#ffb4ab;--ok:#7ddba8;--no:#ff9a8f;--sl:#26332c}}
+:root[data-theme=dark]{--bg:#141a17;--card:#1d2621;--tx:#e8efe9;--mu:#9fb0a6;--ln:#9cc7b2;--ac:#4cc39a;--bd:#34443b;--g:#1d4a35;--gt:#9ae6c0;--l:#512623;--lt:#ffb4ab;--ok:#7ddba8;--no:#ff9a8f;--sl:#26332c}
+*{box-sizing:border-box}html,body{margin:0}body{background:var(--bg);color:var(--tx);font:15px/1.55 "Noto Sans KR",system-ui,sans-serif}
+header{padding:14px 16px 6px;max-width:900px;margin:auto}h1{font-size:20px;margin:0 0 8px}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+input,select,button{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:6px 10px}
+button{cursor:pointer}button.p{background:var(--ac);color:#fff;border-color:var(--ac)}
+nav{display:flex;gap:6px;overflow-x:auto;padding:8px 16px;max-width:900px;margin:auto}nav button{white-space:nowrap}nav button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+main{max-width:900px;margin:auto;padding:0 16px 40px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin:10px 0}
+.card h2{font-size:17px;margin:0 0 6px}.mu{color:var(--mu);font-size:13px}
+.tw{overflow-x:auto;padding:4px 0}.tr{position:relative;min-width:520px}.tr svg{position:absolute;inset:0}.tr line{stroke:var(--ln);stroke-width:2.5;stroke-linecap:round}
+.br{position:absolute;height:34px;border-radius:6px}.br.over,.slot.over{background:color-mix(in srgb,var(--ac) 25%,transparent)}
+.mk{position:absolute;transform:translateX(-50%);font-size:12px;font-weight:700;padding:1px 8px;border-radius:99px;white-space:nowrap;border:1.5px solid;z-index:3}
+.mk.g{background:var(--g);color:var(--gt);border-color:var(--gt)}.mk.l{background:var(--l);color:var(--lt);border-color:var(--lt)}.mk.f{opacity:.9;border-style:dashed}.mk:not(.f){cursor:pointer}
+.slot{position:absolute;height:38px;border:2px dashed var(--bd);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--mu);font-size:13px;background:var(--sl)}
+.slot.fx{border-style:solid;background:var(--card);font-weight:700}.slot.has{border-style:solid;border-color:var(--ac)}
+.chip{display:inline-block;padding:5px 12px;margin:3px;border-radius:99px;font-weight:700;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab;border:2px solid var(--ac);background:var(--card)}
+.chip.g{background:var(--g);color:var(--gt);border-color:var(--gt)}.chip.l{background:var(--l);color:var(--lt);border-color:var(--lt)}
+.slot .chip{margin:0;padding:3px 10px}.ghost{position:fixed;transform:translate(-50%,-50%);pointer-events:none;z-index:99;opacity:.9}
+.pool{min-height:46px;border:2px dashed var(--bd);border-radius:10px;padding:4px}.pool.over{background:color-mix(in srgb,var(--ac) 20%,transparent)}
+table{border-collapse:collapse;font-size:13px}td,th{border:1px solid var(--bd);padding:3px 9px;text-align:center}th{background:var(--sl)}
+.ok{color:var(--ok)}.no{color:var(--no)}.msg{background:var(--sl);border-radius:8px;padding:8px 10px;margin-top:8px;font-size:14px}
+.opt{display:block;width:100%;text-align:left;margin:4px 0}.opt.on{border-color:var(--ac);background:var(--g);color:var(--gt)}
+.it{padding:3px 0;border-bottom:1px solid var(--bd);font-size:14px}ol{padding-left:20px;margin:4px 0}
+@media print{header .bar,nav,.noprint{display:none}}
+</style></head><body>
+<header><h1>🌳 계통수 그리기 활동지</h1>
+<div class="bar"><input id="nm" placeholder="학번 · 이름" size="12"><label>난이도 <select id="lv"><option value="0">쉬움</option><option value="1" selected>보통</option><option value="2">어려움</option></select></label><span class="mu" id="lvd"></span></div></header>
+<nav id="nav"></nav><main id="main"></main>
+<script>
+const L=n=>({n}),N=(id,...c)=>({id,c});
+const A={tree:N('r',L('칠성장어'),N('a',L('상어'),N('b',L('도롱뇽'),N('c',L('도마뱀'),N('d',L('쥐'),L('사람')))))),
+orgs:['사람','상어','도마뱀','칠성장어','쥐','도롱뇽'],traits:['턱','네발','양막','털'],
+ev:[{b:'a',t:'턱',k:'g'},{b:'b',t:'네발',k:'g'},{b:'c',t:'양막',k:'g'},{b:'d',t:'털',k:'g'}]};
+const B={tree:N('r',L('상어'),N('a',L('도롱뇽'),N('b',L('사람'),N('c',N('d',L('도마뱀'),L('뱀')),L('닭'))))),
+orgs:['닭','뱀','상어','사람','도롱뇽','도마뱀'],traits:['네발','양막','털','깃털'],
+ev:[{b:'a',t:'네발',k:'g'},{b:'b',t:'양막',k:'g'},{b:'사람',t:'털',k:'g'},{b:'닭',t:'깃털',k:'g'},{b:'뱀',t:'네발',k:'l'}]};
+[A,B].forEach(ds=>{let i=0;ds.nodes={};ds.leaves=[];(function w(n,p){n.p=p;if(n.c){n.c.forEach(c=>w(c,n));n.h=1+Math.max(...n.c.map(c=>c.h))}else{n.id='l'+i++;n.h=0;ds.leaves.push(n)}ds.nodes[n.id]=n})(ds.tree);
+ds.names=n=>n.c?n.c.flatMap(ds.names):[n.n];ds.tab={};
+(function w(n,s){s={...s};ds.ev.forEach(e=>{if(e.b===n.id||(!n.c&&e.b===n.n))s[e.t]=e.k==='g'?1:0});if(n.c)n.c.forEach(c=>w(c,s));else ds.tab[n.n]=s})(ds.tree,{});});
+const QS=[{q:'사람과 가장 가까운 친척(자매군)은 누구일까요?',o:['상어','도마뱀','쥐','칠성장어'],a:2,h:'사람과 가장 최근에 공통 조상을 공유하는 생물을 찾으세요.'},
+{q:'양막 형질은 어느 가지에서 처음 나타났을까요?',o:['도롱뇽 가지','도마뱀과 쥐·사람의 공통 조상 가지','사람 가지','상어 가지'],a:1,h:'양막이 있는 생물을 모두 포함하는 가장 작은 묶음을 찾으세요.'},
+{q:'다음 중 공통 조상과 그 모든 후손을 포함하는 묶음(단계통군)이 아닌 것은?',o:['도롱뇽·도마뱀·쥐·사람','도마뱀·쥐·사람','도롱뇽·쥐·사람','쥐·사람'],a:2,h:'도롱뇽·쥐·사람의 공통 조상에서 갈라진 후손에 도마뱀이 빠졌는지 확인하세요.'},
+{q:'뱀은 네발이 없지만 조상은 네발을 가졌습니다(활동 3의 계통수). 뱀 가지에 표시할 변화는?',o:['네발 출현','네발 소실','털 출현','변화 없음'],a:1,h:'조상에 있던 형질이 후손에서 없어지는 변화입니다.'}];
+const ACT=[{t:'생물 배치하기',ds:A,leaves:'blank',marks:'given',d:'형질표와 가지 위 표시(＋)를 보고, 아래 생물을 오른쪽 빈칸에 끌어다 놓아 계통수를 완성하세요.'},
+{t:'형질 출현 표시',ds:A,leaves:'filled',marks:'blank',d:'형질표를 보고 ＋형질 표시를 해당 형질이 처음 나타난 가지에 끌어다 놓으세요. 잘못 놓은 표시는 눌러서 지웁니다.'},
+{t:'형질 소실 표시',ds:B,leaves:'filled',marks:'gainGiven',d:'출현 표시는 이미 있습니다. 형질표에서 조상에겐 있었지만 사라진 형질을 찾아 －소실 표시를 놓으세요.'},
+{t:'계통수 완성하기',ds:B,leaves:'blank',marks:'blank',d:'생물 배치와 형질 출현·소실 표시를 모두 직접 해 보세요.'},
+{t:'계통수 해석 퀴즈',quiz:1,ds:A,d:'아래 계통수(활동 1의 정답 계통수)를 읽고 질문에 답하세요.'}];
+const LVD=['힌트 무제한 · 일부 생물 미리 배치 · 필요한 표시만 제공','힌트 3회 · 출현/소실 표시 일부 오답 후보 포함','힌트 없음 · 모든 형질의 출현/소실 표시 제공 · 미리 배치 없음'];
+let lv=1,tab=0,showAns=false,ST=[];
+const $=s=>document.querySelector(s);
+function init(i){const a=ACT[i],ds=a.ds,S={slots:{},fx:new Set(),marks:[],hints:0,sub:false,ans:[]};
+if(a.leaves==='filled')ds.leaves.forEach(l=>{S.slots[l.id]=l.n;S.fx.add(l.id)});
+else if(!a.quiz&&lv===0)ds.leaves.forEach((l,j)=>{if(j%2===0){S.slots[l.id]=l.n;S.fx.add(l.id)}});
+ds.ev.forEach(e=>{if(a.marks==='given'||(a.marks==='gainGiven'&&e.k==='g'))S.marks.push({b:evId(ds,e.b),t:e.t,k:e.k,f:1})});return S}
+const evId=(ds,b)=>ds.nodes[b]?b:ds.leaves.find(l=>l.n===b).id;
+function resetAll(){ST=ACT.map((_,i)=>init(i))}
+function chips(a){const ds=a.ds,need=ds.ev.filter(e=>!(a.marks==='given'||(a.marks==='gainGiven'&&e.k==='g'))),o=[];
+const add=(t,k)=>{if(!o.some(x=>x.t===t&&x.k===k))o.push({t,k})};
+if(lv===0)need.forEach(e=>add(e.t,e.k));
+else if(lv===1){ds.traits.forEach(t=>add(t,'g'));need.filter(e=>e.k==='l').forEach(e=>add(e.t,'l'))}
+else ds.traits.forEach(t=>{add(t,'g');add(t,'l')});
+return o.sort((x,y)=>x.k<y.k?1:-1)}
+function table(ds){return `<table><tr><th>생물</th>${ds.traits.map(t=>`<th>${t}</th>`).join('')}</tr>${ds.orgs.map(o=>`<tr><td>${o}</td>${ds.traits.map(t=>`<td>${ds.tab[o][t]?'○':'×'}</td>`).join('')}</tr>`).join('')}</table>`}
+function treeHtml(ds,S,W){const sw=112,rh=54,Hr=ds.tree.h,step=(W-sw-22)/(Hr+.6),H=ds.leaves.length*rh;let k=0;
+(function w(n){if(!n.c){n.y=k++*rh+rh/2;n.x=W-sw-10;return}n.c.forEach(w);n.y=(n.c[0].y+n.c[n.c.length-1].y)/2;n.x=12+(Hr-n.h+.6)*step})(ds.tree);
+let svg='',h='';
+Object.values(ds.nodes).forEach(n=>{const px=n.p?n.p.x:12;svg+=`<line x1="${px}" y1="${n.y}" x2="${n.x}" y2="${n.y}"/>`;
+if(n.c)svg+=`<line x1="${n.x}" y1="${n.c[0].y}" x2="${n.x}" y2="${n.c[n.c.length-1].y}"/>`;
+h+=`<div class="br" data-drop="br" data-id="${n.id}" style="left:${px}px;width:${n.x-px}px;top:${n.y-17}px"></div>`;
+S.marks.map((m,q)=>[m,q]).filter(([m])=>m.b===n.id).forEach(([m,q],j)=>{h+=`<span class="mk ${m.k}${m.f?' f':''}" ${m.f?'':`data-rm="${q}"`} data-drop="br" data-id="${n.id}" style="left:${(px+n.x)/2}px;top:${n.y-32-j*24}px" title="${m.f?'':'눌러서 지우기'}">${m.k==='g'?'＋':'－'}${m.t}</span>`});
+if(!n.c){const p=S.slots[n.id],fx=S.fx.has(n.id);
+h+=`<div class="slot ${fx?'fx':p?'has':''}" ${fx?'':`data-drop="slot" data-id="${n.id}"`} style="left:${n.x+4}px;width:${W-n.x-10}px;top:${n.y-19}px">${p?`<span class="${fx?'':'chip'}" ${fx?'':`data-drag="org" data-v="${p}" data-from="${n.id}"`}>${p}</span>`:'빈칸'}</div>`}});
+return `<div class="tw"><div class="tr" style="width:${W}px;height:${H}px"><svg width="${W}" height="${H}">${svg}</svg>${h}</div></div>`}
+const full=ds=>{const S={slots:{},fx:new Set(),marks:ds.ev.map(e=>({b:evId(ds,e.b),t:e.t,k:e.k,f:1}))};ds.leaves.forEach(l=>{S.slots[l.id]=l.n;S.fx.add(l.id)});return S};
+const tstr=(ds,n)=>ds.traits.map(t=>t+(ds.tab[n][t]?'○':'×')).join(' ');
+function lab(ds,b,S){const n=ds.nodes[b];if(!n)return b+' 가지';if(!n.c)return(S.slots[b]||'빈 칸')+' 가지';const nm=ds.names(n);return(nm.length>2?`${nm[0]} 외 ${nm.length-1}종`:nm.join('·'))+'의 공통 조상 가지'}
+const mkey=(ds,m,S)=>{const n=ds.nodes[m.b];return n.c?m.b:(S.slots[m.b]||null)};
+function evalAct(i){const a=ACT[i],ds=a.ds,S=ST[i],items=[];
+if(a.quiz){QS.forEach((q,j)=>items.push({ok:S.ans[j]===q.a,t:q.q,mine:q.o[S.ans[j]]??'미응답',ans:q.o[q.a],h:q.h}));return fin(items,0)}
+if(a.leaves==='blank')ds.leaves.forEach((l,j)=>{if(S.fx.has(l.id))return;const p=S.slots[l.id],par=l.p,sib=par.c.every(c=>!c.c);
+items.push({ok:p===l.n||!!(sib&&p&&par.c.some(c=>c.n===p)),t:`${j+1}번째 칸(위에서부터)`,mine:p||'비어 있음',ans:l.n,h:`${j+1}번째 칸의 생물은 이런 형질을 가집니다 → ${tstr(ds,l.n)}`})});
+const exp=ds.ev.filter(e=>!(a.marks==='given'||(a.marks==='gainGiven'&&e.k==='g'))),mine=S.marks.filter(m=>!m.f),used=new Set();
+exp.forEach(e=>{const x=mine.findIndex((m,q)=>!used.has(q)&&m.t===e.t&&m.k===e.k&&mkey(ds,m,S)===e.b);if(x>=0)used.add(x);
+items.push({ok:x>=0,t:`${lab(ds,e.b,S)}의 ‘${e.t}’ ${e.k==='g'?'출현':'소실'} 표시`,mine:'표시 없음 또는 다른 가지',ans:lab(ds,e.b,S),h:`‘${e.t}’ 형질이 ${e.k==='g'?'처음 나타나는':'사라지는'} 가지는 어디일까요? 형질표에서 ○와 ×를 비교해 보세요.`})});
+let ex=0;mine.forEach((m,q)=>{if(!used.has(q)){ex++;items.push({ok:false,x:1,t:`잘못 놓은 표시: ${m.k==='g'?'＋':'－'}${m.t}`,mine:lab(ds,m.b,S)+'에 놓음',ans:'(이 위치에는 필요 없음)',h:'필요 없는 곳에 놓은 표시가 있어요. 눌러서 지워 보세요.'})}});
+return fin(items,ex)}
+const fin=(items,ex)=>({items,ex,ok:items.filter(x=>x.ok).length,tot:items.filter(x=>!x.x).length});
+function render(){const W=Math.max(520,Math.min(860,$('#main').clientWidth-34));
+$('#nav').innerHTML=['도움말',...ACT.map((a,i)=>`활동${i+1}`),'결과확인지'].map((t,i)=>`<button class="${i===tab?'on':''}" data-tab="${i}">${t}</button>`).join('');
+$('#lvd').textContent=LVD[lv];let h='';
+if(tab===0){const ds=A;h=`<div class="card"><h2>📘 계통수란?</h2><p>생물들이 공통 조상에서 갈라져 나온 관계를 가지 모양으로 나타낸 그림입니다. 가지가 갈라지는 점은 공통 조상, 오른쪽 끝은 현재 생물입니다.</p></div>
+<div class="card"><h2>🧭 그리는 순서</h2><ol><li><b>형질표 읽기</b> – 생물마다 ○(있음) ×(없음)을 확인합니다.</li><li><b>공유 형질로 묶기</b> – 같은 형질을 가진 생물끼리 가장 가까운 가지로 묶습니다. 형질이 적은 생물이 먼저 갈라져 나갑니다(외군).</li><li><b>출현 표시(＋)</b> – 그 형질을 가진 생물 전체의 공통 조상 가지에 표시합니다. 형질은 한 번만 나타난 것으로 봅니다.</li><li><b>소실 표시(－)</b> – 조상은 가졌는데 일부 후손만 형질이 없다면, 그 후손 가지에서 형질이 사라진 것으로 봅니다.</li><li><b>점검</b> – 공통 조상과 그 후손 전체를 묶은 것이 단계통군입니다.</li></ol></div>
+<div class="card"><h2>🌿 샘플 계통수</h2><div class="mu">＋초록 = 형질 출현 · －빨강 = 형질 소실</div>${treeHtml(ds,full(ds),W)}${table(ds)}<div class="msg">예) ‘양막’은 도마뱀·쥐·사람에만 있으므로 이 셋의 공통 조상 가지에 ＋양막을 한 번 표시합니다. 상어는 ‘턱’은 있지만 ‘네발’이 없어서 도롱뇽보다 먼저 갈라집니다.</div></div>
+<div class="card"><h2>🖱️ 사용법</h2><ul><li>생물/형질 칩을 <b>끌어서</b> 놓습니다. (휴대폰은 손가락으로 드래그)</li><li>놓은 생물을 다른 칸으로 옮기거나 아래 상자로 끌면 되돌립니다.</li><li>＋/－ 표시를 <b>누르면 삭제</b>됩니다.</li><li>활동을 마치면 ‘답안 제출’을 누르고, <b>결과확인지</b> 탭에서 오답을 확인하세요.</li></ul></div>`}
+else if(tab<=5){const i=tab-1,a=ACT[i],S=ST[i],ds=a.ds;h=`<div class="card"><h2>활동 ${tab}. ${a.t}</h2><p>${a.d}</p>`;
+if(a.quiz){h+=treeHtml(ds,full(ds),W)+table(ds)+QS.map((q,j)=>`<div class="card"><b>Q${j+1}. ${q.q}</b>${q.o.map((o,x)=>`<button class="opt ${S.ans[j]===x?'on':''}" data-q="${j}" data-o="${x}">${o}</button>`).join('')}</div>`).join('')}
+else{h+=table(ds)+treeHtml(ds,S,W);
+if(a.leaves==='blank'){const pool=ds.orgs.filter(o=>!Object.values(S.slots).includes(o));h+=`<div class="mu">생물 상자</div><div class="pool" data-drop="pool">${pool.map(o=>`<span class="chip" data-drag="org" data-v="${o}" data-from="pool">${o}</span>`).join('')}</div>`}
+if(a.marks!=='given'){h+=`<div class="mu" style="margin-top:8px">형질 표시 (가지 위로 끌어놓기)</div><div>${chips(a).map(c=>`<span class="chip ${c.k}" data-drag="tr" data-t="${c.t}" data-k="${c.k}">${c.k==='g'?'＋':'－'}${c.t} ${c.k==='g'?'출현':'소실'}</span>`).join('')}</div>`}}
+const hl=lv===0?'∞':3-S.hints;
+h+=`<div class="bar noprint" style="margin-top:10px">${!a.quiz&&lv<2?`<button data-hint="1">💡 힌트 (${hl})</button>`:''}<button class="p" data-sub="1">답안 제출</button><button data-reset="1">처음부터</button>${S.sub?'<span class="ok">✔ 제출됨</span>':''}</div><div id="hm"></div></div>`}
+else{let T=0,O=0;const body=ACT.map((a,i)=>{const r=evalAct(i),S=ST[i];T+=r.tot;O+=r.ok;
+return `<div class="card"><h2>활동 ${i+1}. ${a.t} <span class="${S.sub?'ok':'no'}" style="font-size:13px">${S.sub?'제출':'미제출'}</span></h2><b>${r.ok} / ${r.tot}</b> 정답${r.ex?` · <span class="no">잘못 놓은 표시 ${r.ex}개</span>`:''}${r.items.map(x=>`<div class="it ${x.ok?'ok':'no'}">${x.ok?'✔':'✘'} ${x.t}${x.ok?'':` — 내 답: ${x.mine}${showAns?` / 정답: ${x.ans}`:''}`}</div>`).join('')}</div>`}).join('');
+h=`<div class="card"><h2>📝 결과확인지</h2><div>${$('#nm').value||'이름 미입력'} · 난이도 ${['쉬움','보통','어려움'][lv]}</div><div style="font-size:18px"><b>총 ${O} / ${T}</b></div><div class="bar noprint"><label><input type="checkbox" id="sa" ${showAns?'checked':''}> 정답 함께 보기</label><button onclick="print()">🖨 인쇄</button></div></div>`+body}
+$('#main').innerHTML=h}
+function drop(o,t){const S=ST[tab-1];if(!S)return;
+if(o.drag==='org'){if(t.drop==='slot'){const occ=S.slots[t.id];S.slots[t.id]=o.v;if(o.from!=='pool'&&o.from)S.slots[o.from]=o.from===t.id?o.v:(occ||null)}else if(t.drop==='pool'&&o.from!=='pool')S.slots[o.from]=null}
+else if(t.drop==='br'&&!S.marks.some(m=>m.b===t.id&&m.t===o.t&&m.k===o.k))S.marks.push({b:t.id,t:o.t,k:o.k});
+S.sub=false;render()}
+let dr=null;
+function mv(e){if(!dr)return;dr.g.style.left=e.clientX+'px';dr.g.style.top=e.clientY+'px';document.querySelectorAll('.over').forEach(x=>x.classList.remove('over'));
+const el=document.elementFromPoint(e.clientX,e.clientY),t=el&&el.closest('[data-drop]');if(t)t.classList.add('over')}
+document.addEventListener('pointerdown',e=>{const d=e.target.closest('[data-drag]');if(!d)return;e.preventDefault();const g=d.cloneNode(true);g.classList.add('ghost');document.body.appendChild(g);dr={g,o:{...d.dataset}};mv(e)});
+document.addEventListener('pointermove',mv);
+document.addEventListener('pointerup',e=>{if(!dr)return;const el=document.elementFromPoint(e.clientX,e.clientY),t=el&&el.closest('[data-drop]'),o=dr.o;dr.g.remove();dr=null;document.querySelectorAll('.over').forEach(x=>x.classList.remove('over'));if(t)drop(o,{...t.dataset})});
+document.addEventListener('pointercancel',()=>{if(dr){dr.g.remove();dr=null}});
+document.addEventListener('click',e=>{const t=e.target,S=ST[tab-1];
+const b=(k)=>t.closest(`[data-${k}]`);let x;
+if(x=b('tab')){tab=+x.dataset.tab;render();scrollTo(0,0)}
+else if(x=b('rm')){S.marks.splice(+x.dataset.rm,1);S.sub=false;render()}
+else if(x=b('q')){S.ans[+x.dataset.q]=+x.dataset.o;S.sub=false;render()}
+else if(b('sub')){S.sub=true;render()}
+else if(b('reset')){if(confirm('이 활동을 처음부터 다시 할까요?')){ST[tab-1]=init(tab-1);render()}}
+else if(b('hint')){const i=tab-1;if(lv===1&&S.hints>=3){$('#hm').innerHTML='<div class="msg">힌트를 모두 사용했어요.</div>';return}
+const r=evalAct(i),w=r.items.find(x=>!x.ok);if(lv===1)S.hints++;
+const m=w?w.h:'지금까지는 모두 맞았어요! 빠진 부분이 없는지 확인해 보세요.';render();$('#hm').innerHTML=`<div class="msg">💡 ${m}</div>`}
+else if(t.id==='sa'){showAns=t.checked;render()}});
+$('#lv').addEventListener('change',e=>{if(confirm('난이도를 바꾸면 모든 활동이 처음부터 다시 시작됩니다. 계속할까요?')){lv=+e.target.value;resetAll();render()}else e.target.value=lv});
+let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(render,150)});
+resetAll();render();
+</script></body></html>
